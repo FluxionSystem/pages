@@ -62,6 +62,23 @@
     .button_nav_wrap:hover .button_nav_drop,
     .button_nav_wrap:focus-within .button_nav_drop { display: block; }
 
+    /* Language dropdown dark theme (Webflow runtime normally handles this) */
+    .button_nav_drop.w-dropdown-list {
+      background: #0f1e36;
+      border: 1px solid rgba(148,163,184,.16);
+      border-radius: 8px;
+      padding: 4px 0;
+      min-width: 60px;
+    }
+    .button_nav-link.w-dropdown-link {
+      color: rgba(255,255,255,.65);
+      padding: 6px 14px;
+    }
+    .button_nav-link.w-dropdown-link:hover {
+      color: #fff;
+      background: rgba(255,255,255,.06);
+    }
+
     /* Protect Webflow header/footer from page CSS bleed */
     header.header { position: sticky; top: 0; z-index: 200; }
     header.header .nav { position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
