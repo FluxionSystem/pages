@@ -65,8 +65,53 @@ repo root/
 - `<footer>` block (entire thing)
 - The locale/navigation `<script>` at the bottom
 - The Webflow CSS link
-- The font loader
+- The font loading `<link>` tags (do NOT use WebFont JS — it causes race conditions)
 - Favicon links
+
+---
+
+## CRITICAL: CSS scoping rules
+
+The `<main>` element MUST have the class `dw-page`:
+```html
+<main class="main gp-content dw-page">
+```
+
+The header and footer use Webflow's CSS. If your page CSS uses bare element
+selectors, they WILL break the header/footer. This has happened and was painful
+to debug. The rule is simple:
+
+### NEVER use bare element selectors in page CSS
+
+| WRONG (breaks header/footer)         | CORRECT (scoped to content)                    |
+|---------------------------------------|------------------------------------------------|
+| `nav { position: fixed; ... }`        | `.dw-subnav { position: sticky; ... }`         |
+| `a { color: inherit; }`              | `.dw-page a { color: inherit; }`               |
+| `h1, h2, h3 { font-family: ... }`   | `.dw-page h1, .dw-page h2, .dw-page h3 { }`  |
+| `p { margin: 0; }`                   | `.dw-page p { margin: 0; }`                   |
+| `footer { border-top: ... }`         | `.dw-page-footer { border-top: ... }`          |
+
+**Why:** The Webflow header contains `<nav>`, `<a>`, `<div>` elements styled by
+Webflow's CSS. A bare `nav {}` in your page CSS overrides the Webflow nav styling
+and breaks the header layout, language dropdown, and logo positioning.
+
+**The template already includes protection overrides** for `header.header` and
+`footer.footer`, but these are a safety net — the real fix is scoping your CSS.
+
+### If using a sub-navigation for in-page section links
+
+Use class `.dw-subnav` (not bare `nav`), and `id="dw-nav"` (not `id="nav"`
+which can conflict with page scripts):
+```html
+<nav class="dw-subnav" id="dw-nav">
+  <div class="dw-subnav-inner">
+    <div class="navlinks">
+      <a href="#section-1">Section 1</a>
+      <a href="#section-2">Section 2</a>
+    </div>
+  </div>
+</nav>
+```
 
 ---
 
@@ -173,7 +218,9 @@ When viewing the Ukrainian version at `pages.fluxionsystem.com/ua/denkware/`:
 1. [ ] File is at the correct path (see naming convention above)
 2. [ ] `<title>` and meta description are filled in
 3. [ ] Only `<main>` content was modified — header/footer/script untouched
-4. [ ] Uses Webflow utility classes, not custom duplicates
-5. [ ] Any custom CSS is in the designated `{{CUSTOM_CSS}}` area
-6. [ ] All internal links to the main site use absolute URLs (`https://fluxionsystem.com/...`)
-7. [ ] Tested locally by opening the HTML file in a browser (fonts load, layout looks right)
+4. [ ] `<main>` has class `dw-page` (required for CSS scoping)
+5. [ ] **No bare element selectors** in page CSS (`nav{}`, `a{}`, `h1{}`, `footer{}` etc.) — all scoped to `.dw-page`
+6. [ ] Uses Webflow utility classes where possible, not custom duplicates
+7. [ ] Any custom CSS is in the designated `{{CUSTOM_CSS}}` area
+8. [ ] All internal links to the main site use absolute URLs (`https://fluxionsystem.com/...`)
+9. [ ] Tested locally by opening the HTML file in a browser — header/footer intact, no console errors
