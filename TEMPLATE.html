@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <!-- ============================================================
+       FLUXIONSYSTEM GITHUB PAGES TEMPLATE
+       ============================================================
+       INSTRUCTIONS FOR CLAUDE / AI:
+       1. Copy this entire file as the starting point
+       2. Replace all {{PLACEHOLDERS}} with actual content
+       3. Keep the header and footer EXACTLY as they are
+       4. Only modify the <main> section between CONTENT START / END
+       5. See TEMPLATE-RULES.md for naming conventions and constraints
+       ============================================================ -->
+
+  <!-- {{PAGE_TITLE}} - e.g. "DenkWare — FluxionSystem" -->
+  <title>{{PAGE_TITLE}}</title>
+  <meta name="description" content="{{PAGE_DESCRIPTION}}"/>
+  <meta property="og:title" content="{{PAGE_TITLE}}"/>
+  <meta property="og:description" content="{{PAGE_DESCRIPTION}}"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:title" content="{{PAGE_TITLE}}"/>
+  <meta name="twitter:description" content="{{PAGE_DESCRIPTION}}"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+  <!-- Webflow shared stylesheet — this is what makes fonts/colors/spacing match -->
+  <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/css/fluxionsystem-dev.webflow.shared.bdaf19fe6.min.css"
+        rel="stylesheet" type="text/css" crossorigin="anonymous"/>
+
+  <!-- Inter font — CSS link (reliable for standalone pages) -->
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Favicons -->
+  <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fb687ec5f23dac9cfc4117_32x32.png" rel="icon" type="image/png" sizes="32x32"/>
+  <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fb687e7c37d2a06b98920f_32x32.png" rel="icon" type="image/png" sizes="48x48"/>
+  <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fb687ef4c4fc5612951e16_32x32.png" rel="apple-touch-icon" sizes="180x180"/>
+
+  <!-- ==========================================================
+       PAGE-LEVEL STYLES
+       Use Webflow's utility classes wherever possible.
+       Only add custom CSS here for content-specific needs.
+       ========================================================== -->
+  <style>
+    /* Reset for standalone page (Webflow JS normally handles some of this) */
+    a, button { text-decoration: none; color: inherit; }
+    :is(h1,h2,h3,h4,h5,p):not(.u-rich-text *) { margin: 0; }
+
+    /* Hover states matching Webflow site */
+    @media (hover: hover) {
+      .nav_link:hover { color: white; }
+      .button_nav_wrap:hover .button_nav_element { color: white; border-color: white; }
+      .button_nav_wrap:hover .button_nav_drop { color: white; border-color: white; }
+      .button_main_wrap:hover { background-color: #127363; border-color: #127363; }
+      .button_secondary_wrap:hover { background-color: #2e86c11f; }
+    }
+
+    /* Language dropdown fix for standalone pages */
+    .button_nav_drop { display: none; }
+    .button_nav_wrap:hover .button_nav_drop,
+    .button_nav_wrap:focus-within .button_nav_drop { display: block; }
+
+    /* Protect Webflow header/footer from page CSS bleed */
+    header.header { position: sticky; top: 0; z-index: 200; }
+    header.header .nav { position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
+    footer.footer { border-top: none; margin-top: 0; }
+
+    /* Content section spacing — matches Webflow section rhythm */
+    .gp-content { padding-top: 2rem; }
+
+    /* --------------------------------------------------------
+       {{CUSTOM_CSS}} — Claude: add page-specific styles here
+       -------------------------------------------------------- */
+  </style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER — DO NOT MODIFY
+     Nav links point back to fluxionsystem.com (main Webflow site)
+     Language links are defined by the locale JS below
+     ============================================================ -->
+<header class="header">
+  <div class="header_container u-container">
+    <div class="flex-grow">
+      <a aria-label="go to home page" href="https://fluxionsystem.com/" class="nav_logo w-inline-block">
+        <img width="336" height="192" alt="FluxionSystem"
+             src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69f8996e8e3fced2b5f35bc8_LOGO.svg"
+             loading="eager"/>
+      </a>
+    </div>
+    <nav class="nav">
+      <ul role="list" class="nav_llst">
+        <li class="nal_ll"><a href="https://fluxionsystem.com/#technology" class="nav_link" data-nav="technology">Technology</a></li>
+        <li class="nal_ll"><a href="https://fluxionsystem.com/products" class="nav_link" data-nav="products">Products</a></li>
+        <li class="nal_ll"><a href="https://fluxionsystem.com/#about" class="nav_link" data-nav="about">About</a></li>
+        <li class="nal_ll"><a href="https://fluxionsystem.com/#contact" class="nav_link" data-nav="contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="nav_btns">
+      <div data-hover="false" data-delay="0" class="button_nav_wrap w-dropdown">
+        <div class="button_nav_element w-dropdown-toggle">
+          <div class="button_nav_text" id="gp-current-lang">EN</div>
+          <div class="icon-12 w-icon-dropdown-toggle"></div>
+        </div>
+        <nav class="button_nav_drop w-dropdown-list" id="gp-lang-menu">
+          <a href="#" class="button_nav-link w-dropdown-link" data-lang="en">EN</a>
+          <a href="#" class="button_nav-link w-dropdown-link" data-lang="uk">UA</a>
+          <a href="#" class="button_nav-link w-dropdown-link" data-lang="it">IT</a>
+          <a href="#" class="button_nav-link w-dropdown-link" data-lang="de">DE</a>
+        </nav>
+      </div>
+      <a aria-label="LinkedIn" href="https://www.linkedin.com/company/fluxionsystem/" target="_blank" class="nav-link w-inline-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" class="footer_social_icon">
+          <g clip-path="url(#clip-li)"><path d="M17.0392 17.0433H14.0775V12.4025C14.0775 11.2958 14.055 9.87167 12.5342 9.87167C10.99 9.87167 10.7542 11.0758 10.7542 12.3208V17.0433H7.7925V7.5H10.6375V8.80083H10.6758C11.0733 8.05083 12.04 7.25917 13.4842 7.25917C16.485 7.25917 17.04 9.23417 17.04 11.805L17.0392 17.0433ZM4.4475 6.19417C3.49417 6.19417 2.72833 5.4225 2.72833 4.47333C2.72833 3.525 3.495 2.75417 4.4475 2.75417C5.3975 2.75417 6.1675 3.525 6.1675 4.47333C6.1675 5.4225 5.39667 6.19417 4.4475 6.19417ZM5.9325 17.0433H2.9625V7.5H5.9325V17.0433ZM18.5208 0H1.47583C0.66 0 0 0.645 0 1.44083V18.5592C0 19.3558 0.66 20 1.47583 20H18.5183C19.3333 20 20 19.3558 20 18.5592V1.44083C20 0.645 19.3333 0 18.5183 0H18.5208Z" fill="currentColor"/></g>
+          <defs><clipPath id="clip-li"><rect width="20" height="20" fill="currentColor"/></clipPath></defs>
+        </svg>
+      </a>
+      <a aria-label="Facebook" href="https://www.facebook.com/profile.php?id=61589910312496" target="_blank" class="nav-link w-inline-block">
+        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" class="footer_social_icon">
+          <g clip-path="url(#clip-fb)"><path d="M9.99823 19.9847C15.5169 19.9847 19.9906 15.511 19.9906 9.99237C19.9906 4.47374 15.5169 0 9.99823 0C4.47959 0 0.00585938 4.47374 0.00585938 9.99237C0.00585938 15.511 4.47959 19.9847 9.99823 19.9847Z" fill="white" fill-opacity="0.42"/><path d="M8.22772 6.35744C8.22772 6.664 8.22772 8.03324 8.22772 8.03324H7V10.0825H8.22772V16.1716H10.7497V10.0825H12.4421C12.4421 10.0825 12.6006 9.09971 12.6773 8.02552C12.457 8.02552 10.7593 8.02552 10.7593 8.02552C10.7593 8.02552 10.7593 6.83318 10.7593 6.62424C10.7593 6.415 11.0342 6.13336 11.306 6.13336C11.5774 6.13336 12.15 6.13336 12.6801 6.13336C12.6801 5.85408 12.6801 4.89021 12.6801 4C11.9723 4 11.167 4 10.8119 4C8.16527 3.99987 8.22772 6.05105 8.22772 6.35744Z" fill="#060E1A"/></g>
+          <defs><clipPath id="clip-fb"><rect width="20" height="20" fill="white"/></clipPath></defs>
+        </svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     CONTENT START
+     ============================================================
+     Claude: build your page content here using Webflow utility classes.
+
+     AVAILABLE CLASSES (from Webflow CSS):
+       Layout:    u-container, u-section, u-grid-autofit
+       Headings:  u-text-style-h1, u-text-style-h2
+       Body:      u-text-style-large, u-text-style-main, u-text-style-small
+       Accent:    text_accent (teal highlight for key phrases)
+       Muted:     is--muted (lower-opacity text)
+       Eyebrow:   section_eyebrow > eyebrow_bar + eyebrow_text
+       Buttons:   button_main_wrap > button_main_element > button_main_text
+                  button_secondary_wrap > button_secondary_element > button_main_text
+       Width:     _w-580 (max-width constraint), _w-660
+
+     BUTTON PATTERN (with accessible overlay link):
+       <div class="button_main_wrap">
+         <div class="button_main_element">
+           <div aria-hidden="true" class="button_main_text">Button Label</div>
+         </div>
+         <a aria-label="Button Label" href="/target" class="clickable_link w-inline-block"></a>
+       </div>
+
+     SECTION EYEBROW PATTERN:
+       <div class="section_eyebrow">
+         <div class="eyebrow_bar"></div>
+         <div class="eyebrow_text">Section Label</div>
+       </div>
+
+     COLOR REFERENCE (from site CSS variables):
+       --_colors---accent:    #17A589  (teal/green — primary accent)
+       --_colors---accent-2:  #2E86C1  (blue — secondary accent)
+       Background:            #060E1A  (near-black)
+       Text:                  #FFFFFF / rgba(255,255,255,0.65) for muted
+     ============================================================ -->
+<main class="main gp-content">
+
+  <!-- {{PAGE_CONTENT}} -->
+  <!-- Claude: replace this comment block with the actual page sections -->
+
+  <section class="u-section">
+    <div class="u-container">
+      <div class="section_eyebrow">
+        <div class="eyebrow_bar"></div>
+        <div class="eyebrow_text">{{SECTION_EYEBROW}}</div>
+      </div>
+      <h2 class="u-text-style-h2">{{HEADING}} <span class="text_accent">{{ACCENT_PART}}</span></h2>
+      <p class="u-text-style-main">{{BODY_TEXT}}</p>
+    </div>
+  </section>
+
+</main>
+<!-- ============================================================
+     CONTENT END
+     ============================================================ -->
+
+
+<!-- ============================================================
+     FOOTER — DO NOT MODIFY
+     ============================================================ -->
+<footer class="footer u-section">
+  <div class="u-container footer_inner">
+    <div class="footer_logo_wrap">
+      <img src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69f89036417a5e7f100637e5_69f4a652d8a1a6a1d11d2845_LOGO-FS%201%201.svg"
+           loading="lazy" width="82" height="52" alt="" class="footer_logo_img"/>
+    </div>
+    <div class="footer_links_group">
+      <div class="footer_socials">
+        <a aria-label="LinkedIn" href="https://www.linkedin.com/company/fluxionsystem/" target="_blank" class="footer_social_link w-inline-block">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" class="footer_social_icon">
+            <g clip-path="url(#clip-li2)"><path d="M17.0392 17.0433H14.0775V12.4025C14.0775 11.2958 14.055 9.87167 12.5342 9.87167C10.99 9.87167 10.7542 11.0758 10.7542 12.3208V17.0433H7.7925V7.5H10.6375V8.80083H10.6758C11.0733 8.05083 12.04 7.25917 13.4842 7.25917C16.485 7.25917 17.04 9.23417 17.04 11.805L17.0392 17.0433ZM4.4475 6.19417C3.49417 6.19417 2.72833 5.4225 2.72833 4.47333C2.72833 3.525 3.495 2.75417 4.4475 2.75417C5.3975 2.75417 6.1675 3.525 6.1675 4.47333C6.1675 5.4225 5.39667 6.19417 4.4475 6.19417ZM5.9325 17.0433H2.9625V7.5H5.9325V17.0433ZM18.5208 0H1.47583C0.66 0 0 0.645 0 1.44083V18.5592C0 19.3558 0.66 20 1.47583 20H18.5183C19.3333 20 20 19.3558 20 18.5592V1.44083C20 0.645 19.3333 0 18.5183 0H18.5208Z" fill="currentColor"/></g>
+            <defs><clipPath id="clip-li2"><rect width="20" height="20" fill="currentColor"/></clipPath></defs>
+          </svg>
+          <div>LinkedIn</div>
+        </a>
+        <a aria-label="Contact Us" href="mailto:info@fluxionsystem.com" class="footer_social_link w-inline-block">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 20 20" fill="none" class="footer_social_icon">
+            <path d="M16.6667 3.3335H3.33335C2.41669 3.3335 1.66669 4.0835 1.66669 5.00016V15.0002C1.66669 15.9168 2.41669 16.6668 3.33335 16.6668H16.6667C17.5834 16.6668 18.3334 15.9168 18.3334 15.0002V5.00016C18.3334 4.0835 17.5834 3.3335 16.6667 3.3335ZM16.6667 6.66683L10 10.8335L3.33335 6.66683V5.00016L10 9.16683L16.6667 5.00016V6.66683Z" fill="currentColor"/>
+          </svg>
+          <div>Contact Us</div>
+        </a>
+      </div>
+      <div class="footer_legal">
+        <a href="https://fluxionsystem.com/privacy-policy" class="footer_legal_link u-text-style-small is--muted">Privacy Policy</a>
+        <div class="footer_pipe">|</div>
+        <a href="https://fluxionsystem.com/gender-policy" class="footer_legal_link u-text-style-small is--muted">Gender Policy</a>
+        <div class="footer_pipe">|</div>
+        <a href="https://fluxionsystem.com/terms-of-use" class="footer_legal_link u-text-style-small is--muted">Terms of Use</a>
+      </div>
+      <div class="footer_copyright u-text-style-small is--muted">© 2026 FluxionSystem Limited. All rights reserved.</div>
+    </div>
+    <div class="footer_meta">
+      <div class="footer_meta_row">
+        <div>FluxionSystem Limited</div>
+        <div class="footer_pipe">|</div>
+        <div>Rush DUBLIN K56 DH72</div>
+        <div class="footer_pipe">|</div>
+        <div>2 Fynes Field, Kilbush Lane, North Beach</div>
+        <div class="footer_pipe">|</div>
+        <a href="mailto:it@fluxionsystem.com" class="footer_meta_email">it@fluxionsystem.com</a>
+      </div>
+      <div class="footer_meta_row">
+        <div>Management: Albert Klein</div>
+        <div class="footer_pipe">|</div>
+        <div>Company number 806552</div>
+      </div>
+    </div>
+    <div class="footer_badges">
+      <a href="https://www.eurohpc-ju.europa.eu/" target="_blank" class="footer_badge w-inline-block">
+        <img width="207" height="90" alt="EuroHPC" src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/6a05a710bbed0da403a95c7f_eurohpc-seeklogo%201%20(1).svg" loading="lazy" class="footer_badge_img"/>
+        <div class="footer_badge_caption">Supported by the EuroHPC Joint Undertaking and its member states.</div>
+      </a>
+      <a href="https://www.bdsv.eu/about-bdsv.html" target="_blank" class="footer_badge w-inline-block">
+        <img width="207" height="90" alt="BDSV" src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/6a0197aac41c51cce919ed87_Federation_of_German_Security_and_Defence_Industries_e-V-_idUdmBu6MF_1%201.svg" loading="lazy" class="footer_badge_img"/>
+        <div class="footer_badge_caption">FluxionSystem Germany is a member of BDSV</div>
+      </a>
+      <a href="https://industrialdigitaltwin.org" target="_blank" class="footer_badge w-inline-block">
+        <img width="207" height="90" alt="IDTA" src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fca94337dddcc0222c4cf6_idta%20(2).svg" loading="lazy" class="footer_badge_img"/>
+        <div class="footer_badge_caption">FluxionSystem Germany is a member of Industrial Digital Twin Association e.V.</div>
+      </a>
+      <a href="https://smartfactory.de" target="_blank" class="footer_badge w-inline-block">
+        <img width="207" height="90" alt="SmartFactory" src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fca85b71903520ee760fd0_SF_LOGO_OhneSchatten_NEG-200x24.avif" loading="lazy" class="footer_badge_img"/>
+        <div class="footer_badge_caption">FluxionSystem Germany is a member of Technologie-Initiative SmartFactory KL e.V</div>
+      </a>
+      <a href="https://mesa.org" target="_blank" class="footer_badge w-inline-block">
+        <img width="207" height="90" alt="MESA" src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/6a05a8bbc5c02165ad4dc114_MESA%20logo%20(3)%201%201.avif" loading="lazy" class="footer_badge_img"/>
+        <div class="footer_badge_caption">Member of MESA - Manufacturing Enterprise Solutions Association</div>
+      </a>
+      <a href="https://www.vdma.eu/en/" target="_blank" class="footer_badge w-inline-block">
+        <img width="207" height="90" alt="VDMA" src="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/6a326f675eae1aeab3fd7164_VDMA.svg" loading="lazy" class="footer_badge_img"/>
+        <div class="footer_badge_caption">FluxionSystem Germany is a member of VDMA</div>
+      </a>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     LOCALE + NAVIGATION SCRIPT — DO NOT MODIFY
+     Mirrors the Webflow site's locale logic exactly.
+     Handles: lang detection, nav link rewriting, lang switcher.
+     ============================================================ -->
+<script>
+(function () {
+  "use strict";
+
+  // --- Locale definitions (must match Webflow site) ---
+  var LOCALES = {
+    en: { prefix: "",    label: "EN", lang: "en" },
+    uk: { prefix: "/ua", label: "UA", lang: "uk" },
+    it: { prefix: "/it", label: "IT", lang: "it" },
+    de: { prefix: "/de", label: "DE", lang: "de" }
+  };
+  var ORDER = ["en", "uk", "it", "de"];
+  var MAIN_SITE = "https://fluxionsystem.com";
+  var PAGES_SITE = location.origin; // pages.fluxionsystem.com
+
+  // --- Detect current locale from URL path ---
+  var path = location.pathname.replace(/\/+$/, "") || "/";
+  var currentLocale = "en";
+  for (var i = 0; i < ORDER.length; i++) {
+    var pre = LOCALES[ORDER[i]].prefix;
+    if (pre && (path === pre || path.indexOf(pre + "/") === 0)) {
+      currentLocale = ORDER[i];
+      break;
+    }
+  }
+
+  // --- Set html lang attribute ---
+  document.documentElement.lang = LOCALES[currentLocale].lang;
+
+  // --- Extract the page slug (locale-independent part of the path) ---
+  // e.g. /ua/denkware → denkware, /denkware → denkware
+  var slug = path;
+  if (currentLocale !== "en") {
+    slug = path.slice(LOCALES[currentLocale].prefix.length);
+  }
+  slug = slug.replace(/^\//, "");
+
+  // --- Update language switcher label ---
+  var langLabel = document.getElementById("gp-current-lang");
+  if (langLabel) langLabel.textContent = LOCALES[currentLocale].label;
+
+  // --- Wire language switcher links ---
+  var langLinks = document.querySelectorAll("#gp-lang-menu [data-lang]");
+  for (var j = 0; j < langLinks.length; j++) {
+    (function (link) {
+      var targetLocale = link.getAttribute("data-lang");
+      var targetPrefix = LOCALES[targetLocale] ? LOCALES[targetLocale].prefix : "";
+      var targetPath = targetPrefix + "/" + slug;
+      // Clean double slashes
+      targetPath = targetPath.replace(/\/+/g, "/");
+      link.setAttribute("href", targetPath);
+      link.addEventListener("click", function (e) {
+        e.preventDefault();
+        location.href = targetPath;
+      });
+    })(langLinks[j]);
+  }
+
+  // --- Rewrite nav links for current locale ---
+  // Nav points back to fluxionsystem.com with correct locale prefix
+  var navLinks = document.querySelectorAll("[data-nav]");
+  for (var k = 0; k < navLinks.length; k++) {
+    var nav = navLinks[k];
+    var target = nav.getAttribute("data-nav");
+    var localePrefix = LOCALES[currentLocale].prefix;
+    var mainSiteBase = MAIN_SITE + localePrefix;
+
+    switch (target) {
+      case "technology": nav.href = mainSiteBase + "/#technology"; break;
+      case "products":   nav.href = mainSiteBase + "/products"; break;
+      case "about":      nav.href = mainSiteBase + "/#about"; break;
+      case "contact":    nav.href = mainSiteBase + "/#contact"; break;
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
