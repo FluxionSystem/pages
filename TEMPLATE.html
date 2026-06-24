@@ -3,32 +3,27 @@
 <head>
   <meta charset="utf-8"/>
   <!-- ============================================================
-       FLUXIONSYSTEM GITHUB PAGES TEMPLATE
+       FLUXIONSYSTEM GITHUB PAGES TEMPLATE v2
        ============================================================
+       NO external Webflow CSS — all header/footer styles are inline.
+       This avoids iOS scroll-lock caused by Webflow's body{display:flex}.
+       
        INSTRUCTIONS FOR CLAUDE / AI:
        1. Copy this entire file as the starting point
        2. Replace all {{PLACEHOLDERS}} with actual content
        3. Keep the header and footer EXACTLY as they are
        4. Only modify the <main> section between CONTENT START / END
-       5. See TEMPLATE-RULES.md for naming conventions and constraints
+       5. See TEMPLATE-RULES.md for naming, CSS scoping, and constraints
        ============================================================ -->
 
-  <!-- {{PAGE_TITLE}} - e.g. "DenkWare — FluxionSystem" -->
   <title>{{PAGE_TITLE}}</title>
   <meta name="description" content="{{PAGE_DESCRIPTION}}"/>
   <meta property="og:title" content="{{PAGE_TITLE}}"/>
   <meta property="og:description" content="{{PAGE_DESCRIPTION}}"/>
   <meta property="og:type" content="website"/>
-  <meta name="twitter:title" content="{{PAGE_TITLE}}"/>
-  <meta name="twitter:description" content="{{PAGE_DESCRIPTION}}"/>
-  <meta content="summary_large_image" name="twitter:card"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-  <!-- Webflow shared stylesheet — this is what makes fonts/colors/spacing match -->
-  <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/css/fluxionsystem-dev.webflow.shared.bdaf19fe6.min.css"
-        rel="stylesheet" type="text/css" crossorigin="anonymous"/>
-
-  <!-- Inter font — CSS link (reliable for standalone pages) -->
+  <!-- Inter font -->
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -38,71 +33,98 @@
   <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fb687e7c37d2a06b98920f_32x32.png" rel="icon" type="image/png" sizes="48x48"/>
   <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fb687ef4c4fc5612951e16_32x32.png" rel="apple-touch-icon" sizes="180x180"/>
 
-  <!-- ==========================================================
-       PAGE-LEVEL STYLES
-       Use Webflow's utility classes wherever possible.
-       Only add custom CSS here for content-specific needs.
-       ========================================================== -->
   <style>
-    /* Reset for standalone page (Webflow JS normally handles some of this) */
+    /* Reset */
     a, button { text-decoration: none; color: inherit; }
-    :is(h1,h2,h3,h4,h5,p):not(.u-rich-text *) { margin: 0; }
 
-    /* Hover states matching Webflow site */
-    @media (hover: hover) {
-      .nav_link:hover { color: white; }
-      .button_nav_wrap:hover .button_nav_element { color: white; border-color: white; }
-      .button_nav_wrap:hover .button_nav_drop { color: white; border-color: white; }
-      .button_main_wrap:hover { background-color: #127363; border-color: #127363; }
-      .button_secondary_wrap:hover { background-color: #2e86c11f; }
-    }
-
-    /* Language dropdown fix for standalone pages */
-    .button_nav_drop { display: none; }
-    .button_nav_wrap:hover .button_nav_drop,
-    .button_nav_wrap:focus-within .button_nav_drop { display: block; }
-
-    /* Language dropdown dark theme (Webflow runtime normally handles this) */
-    .button_nav_drop.w-dropdown-list {
-      background: #0f1e36;
-      border: 1px solid rgba(148,163,184,.16);
-      border-radius: 8px;
-      padding: 4px 0;
-      min-width: 60px;
-    }
-    .button_nav-link.w-dropdown-link {
-      color: rgba(255,255,255,.65);
-      padding: 6px 14px;
-    }
-    .button_nav-link.w-dropdown-link:hover {
-      color: #fff;
-      background: rgba(255,255,255,.06);
-    }
-
-    /* Protect Webflow header/footer from page CSS bleed */
-    header.header { position: sticky; top: 0; z-index: 200; }
-    header.header .nav { position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
-    footer.footer { border-top: none; margin-top: 0; }
-
-    /* Override Webflow body flex layout which breaks scroll on iOS */
+    /* Override any external CSS that sets body to flex (iOS scroll fix) */
     html { height: auto !important; min-height: 100%; }
     body { display: block !important; min-height: auto !important; }
 
-    /* Content section spacing — matches Webflow section rhythm */
+    /* --- HEADER --- */
+    .header {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(6,14,26,.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 0 clamp(16px,4vw,46px);
+    }
+    .header_container { display: flex; align-items: center; gap: 16px; max-width: 1144px; margin: 0 auto; padding: 14px 0; }
+    .flex-grow { flex: 1; }
+    .nav_logo { display: inline-flex; text-decoration: none; }
+    .nav_logo img { height: 36px; width: auto; }
+    .nav { display: flex; align-items: center; position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
+    .nav_llst { display: flex; list-style: none; gap: 4px; margin: 0; padding: 0; }
+    .nal_ll { list-style: none; }
+    .nav_link { color: rgba(255,255,255,.65); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 8px; transition: color .2s; text-decoration: none; }
+    .nav_btns { display: flex; align-items: center; gap: 10px; margin-left: 16px; }
+    .nav-link { display: inline-flex; align-items: center; text-decoration: none; }
+    .w-inline-block { display: inline-flex; max-width: 100%; }
+    .footer_social_icon { width: 20px; height: 20px; color: rgba(255,255,255,.5); }
+
+    /* Language dropdown */
+    .w-dropdown { position: relative; display: inline-block; }
+    .button_nav_wrap { position: relative; display: inline-block; cursor: pointer; }
+    .button_nav_element, .w-dropdown-toggle { display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: 6px 12px; color: rgba(255,255,255,.7); font-size: 13px; cursor: pointer; }
+    .button_nav_text { font-weight: 500; }
+    .icon-12, .w-icon-dropdown-toggle { font-size: 10px; width: auto; height: auto; position: static; margin: 0; }
+    .icon-12::before, .w-icon-dropdown-toggle::before { content: "▾"; }
+    .button_nav_drop, .w-dropdown-list { display: none; position: absolute; top: 100%; right: 0; margin-top: 4px;
+      background: #0f1e36; border: 1px solid rgba(148,163,184,.16); border-radius: 8px; padding: 4px 0; min-width: 60px; z-index: 910; }
+    .button_nav_wrap:hover .button_nav_drop,
+    .button_nav_wrap:focus-within .button_nav_drop,
+    .w-dropdown:hover .w-dropdown-list { display: block; }
+    .button_nav-link, .w-dropdown-link { display: block; color: rgba(255,255,255,.65); padding: 6px 14px; font-size: 13px; text-decoration: none; }
+    .button_nav-link:hover, .w-dropdown-link:hover { color: #fff; background: rgba(255,255,255,.06); }
+
+    @media (hover: hover) {
+      .nav_link:hover { color: white; }
+      .button_nav_wrap:hover .button_nav_element { color: white; border-color: white; }
+      .footer_social_icon:hover { color: #fff; }
+    }
+
+    /* Mobile: hide desktop nav, keep logo + lang */
+    @media (max-width: 767px) {
+      .nav { display: none; }
+      .nav_btns .nav-link { display: none; }
+    }
+
+    /* --- FOOTER --- */
+    .footer { background: rgba(6,14,26,.95); border-top: 1px solid rgba(255,255,255,.07);
+      padding: clamp(40px,6vw,80px) clamp(16px,4vw,46px); margin-top: 0; overflow: visible; }
+    .footer_inner { max-width: 1144px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+    .footer_logo_wrap { margin-bottom: 8px; }
+    .footer_logo_img { height: 44px; width: auto; opacity: .6; }
+    .footer_links_group { display: flex; flex-direction: column; gap: 12px; }
+    .footer_socials { display: flex; gap: 16px; }
+    .footer_social_link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.5); font-size: 13px; text-decoration: none; }
+    .footer_social_link:hover { color: #fff; }
+    .footer_legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+    .footer_legal_link { color: rgba(255,255,255,.4); font-size: 13px; text-decoration: none; }
+    .footer_pipe { color: rgba(255,255,255,.2); font-size: 13px; }
+    .footer_copyright { color: rgba(255,255,255,.35); font-size: 13px; }
+    .footer_meta { display: flex; flex-direction: column; gap: 4px; }
+    .footer_meta_row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; color: rgba(255,255,255,.35); font-size: 12px; }
+    .footer_meta_email { color: rgba(255,255,255,.45); text-decoration: none; }
+    .footer_badges { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+    .footer_badge { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; }
+    .footer_badge_img { height: 36px; width: auto; opacity: .5; filter: grayscale(1) brightness(2); }
+    .footer_badge_caption { color: rgba(255,255,255,.3); font-size: 11px; max-width: 160px; text-align: center; }
+    .u-section { padding: 0; overflow: visible; }
+    .u-text-style-small { font-size: 13px; }
+    .is--muted { color: rgba(255,255,255,.55); }
+
+    /* Content section spacing */
     .gp-content { padding-top: 2rem; }
 
     /* --------------------------------------------------------
-       {{CUSTOM_CSS}} — Claude: add page-specific styles here
+       {{CUSTOM_CSS}} — page-specific styles go here.
+       CRITICAL: scope ALL selectors to .dw-page
+       e.g. .dw-page h2 {} not h2 {}
        -------------------------------------------------------- */
   </style>
 </head>
 <body>
 
-<!-- ============================================================
-     HEADER — DO NOT MODIFY
-     Nav links point back to fluxionsystem.com (main Webflow site)
-     Language links are defined by the locale JS below
-     ============================================================ -->
 <header class="header">
   <div class="header_container u-container">
     <div class="flex-grow">
@@ -150,66 +172,23 @@
 </header>
 
 <!-- ============================================================
-     CONTENT START
+     CONTENT START — only modify below this line
      ============================================================
-     Claude: build your page content here using Webflow utility classes.
-
-     AVAILABLE CLASSES (from Webflow CSS):
-       Layout:    u-container, u-section, u-grid-autofit
-       Headings:  u-text-style-h1, u-text-style-h2
-       Body:      u-text-style-large, u-text-style-main, u-text-style-small
-       Accent:    text_accent (teal highlight for key phrases)
-       Muted:     is--muted (lower-opacity text)
-       Eyebrow:   section_eyebrow > eyebrow_bar + eyebrow_text
-       Buttons:   button_main_wrap > button_main_element > button_main_text
-                  button_secondary_wrap > button_secondary_element > button_main_text
-       Width:     _w-580 (max-width constraint), _w-660
-
-     BUTTON PATTERN (with accessible overlay link):
-       <div class="button_main_wrap">
-         <div class="button_main_element">
-           <div aria-hidden="true" class="button_main_text">Button Label</div>
-         </div>
-         <a aria-label="Button Label" href="/target" class="clickable_link w-inline-block"></a>
-       </div>
-
-     SECTION EYEBROW PATTERN:
-       <div class="section_eyebrow">
-         <div class="eyebrow_bar"></div>
-         <div class="eyebrow_text">Section Label</div>
-       </div>
-
-     COLOR REFERENCE (from site CSS variables):
-       --_colors---accent:    #17A589  (teal/green — primary accent)
-       --_colors---accent-2:  #2E86C1  (blue — secondary accent)
-       Background:            #060E1A  (near-black)
-       Text:                  #FFFFFF / rgba(255,255,255,0.65) for muted
+     <main> MUST have class "dw-page" for CSS scoping.
+     
+     COLOR REFERENCE:
+       Teal:       #17A589
+       Blue:       #2E86C1
+       Background: #060E1A
+       Text:       #FFFFFF / rgba(255,255,255,0.65) muted
      ============================================================ -->
-<main class="main gp-content">
+<main class="main gp-content dw-page">
 
   <!-- {{PAGE_CONTENT}} -->
-  <!-- Claude: replace this comment block with the actual page sections -->
-
-  <section class="u-section">
-    <div class="u-container">
-      <div class="section_eyebrow">
-        <div class="eyebrow_bar"></div>
-        <div class="eyebrow_text">{{SECTION_EYEBROW}}</div>
-      </div>
-      <h2 class="u-text-style-h2">{{HEADING}} <span class="text_accent">{{ACCENT_PART}}</span></h2>
-      <p class="u-text-style-main">{{BODY_TEXT}}</p>
-    </div>
-  </section>
 
 </main>
-<!-- ============================================================
-     CONTENT END
-     ============================================================ -->
+<!-- CONTENT END -->
 
-
-<!-- ============================================================
-     FOOTER — DO NOT MODIFY
-     ============================================================ -->
 <footer class="footer u-section">
   <div class="u-container footer_inner">
     <div class="footer_logo_wrap">
@@ -285,7 +264,6 @@
     </div>
   </div>
 </footer>
-
 
 <!-- ============================================================
      LOCALE + NAVIGATION SCRIPT — DO NOT MODIFY
