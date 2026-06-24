@@ -12,9 +12,8 @@
   <meta content="summary_large_image" name="twitter:card"/>
   <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-  <!-- Webflow shared stylesheet — header/footer/nav styling -->
-  <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/css/fluxionsystem-dev.webflow.shared.bdaf19fe6.min.css"
-        rel="stylesheet" type="text/css" crossorigin="anonymous"/>
+  <!-- Webflow CSS REMOVED — was causing iOS scroll lock via body{display:flex} and unknown overflow rules.
+       Essential header/footer styles are inlined below instead. -->
 
   <!-- Inter font — CSS link (more reliable than WebFont JS for standalone pages) -->
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -27,41 +26,84 @@
   <link href="https://cdn.prod.website-files.com/69f1beabd0087beb47730e73/69fb687ef4c4fc5612951e16_32x32.png" rel="apple-touch-icon" sizes="180x180"/>
 
   <style>
-    /* Reset for standalone page */
+    /* Reset */
     a, button { text-decoration: none; color: inherit; }
-    :is(h1,h2,h3,h4,h5,p):not(.u-rich-text *) { margin: 0; }
 
-    /* Header/footer hover states */
-    @media (hover: hover) {
-      .header .nav_link:hover { color: white; }
-      .header .button_nav_wrap:hover .button_nav_element { color: white; border-color: white; }
-      .header .button_nav_wrap:hover .button_nav_drop { color: white; border-color: white; }
+    /* Override any external CSS that sets body to flex (iOS scroll fix) */
+    html { height: auto !important; min-height: 100%; }
+    body { display: block !important; min-height: auto !important; }
+
+    /* --- HEADER --- */
+    .header {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(6,14,26,.85); backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      padding: 0 clamp(16px,4vw,46px);
     }
-    .button_nav_drop { display: none; }
+    .header_container { display: flex; align-items: center; gap: 16px; max-width: 1144px; margin: 0 auto; padding: 14px 0; }
+    .flex-grow { flex: 1; }
+    .nav_logo { display: inline-flex; text-decoration: none; }
+    .nav_logo img { height: 36px; width: auto; }
+    .nav { display: flex; align-items: center; position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
+    .nav_llst { display: flex; list-style: none; gap: 4px; margin: 0; padding: 0; }
+    .nal_ll { list-style: none; }
+    .nav_link { color: rgba(255,255,255,.65); font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 8px; transition: color .2s; text-decoration: none; }
+    .nav_btns { display: flex; align-items: center; gap: 10px; margin-left: 16px; }
+    .nav-link { display: inline-flex; align-items: center; text-decoration: none; }
+    .w-inline-block { display: inline-flex; max-width: 100%; }
+    .footer_social_icon { width: 20px; height: 20px; color: rgba(255,255,255,.5); }
+
+    /* Language dropdown */
+    .w-dropdown { position: relative; display: inline-block; }
+    .button_nav_wrap { position: relative; display: inline-block; cursor: pointer; }
+    .button_nav_element, .w-dropdown-toggle { display: flex; align-items: center; gap: 4px; border: 1px solid rgba(255,255,255,.2); border-radius: 8px; padding: 6px 12px; color: rgba(255,255,255,.7); font-size: 13px; cursor: pointer; }
+    .button_nav_text { font-weight: 500; }
+    .icon-12, .w-icon-dropdown-toggle { font-size: 10px; width: auto; height: auto; position: static; margin: 0; }
+    .icon-12::before, .w-icon-dropdown-toggle::before { content: "▾"; }
+    .button_nav_drop, .w-dropdown-list { display: none; position: absolute; top: 100%; right: 0; margin-top: 4px;
+      background: #0f1e36; border: 1px solid rgba(148,163,184,.16); border-radius: 8px; padding: 4px 0; min-width: 60px; z-index: 910; }
     .button_nav_wrap:hover .button_nav_drop,
-    .button_nav_wrap:focus-within .button_nav_drop { display: block; }
+    .button_nav_wrap:focus-within .button_nav_drop,
+    .w-dropdown:hover .w-dropdown-list { display: block; }
+    .button_nav-link, .w-dropdown-link { display: block; color: rgba(255,255,255,.65); padding: 6px 14px; font-size: 13px; text-decoration: none; }
+    .button_nav-link:hover, .w-dropdown-link:hover { color: #fff; background: rgba(255,255,255,.06); }
 
-    /* Language dropdown dark theme (Webflow runtime normally handles this) */
-    .button_nav_drop.w-dropdown-list {
-      background: #0f1e36;
-      border: 1px solid rgba(148,163,184,.16);
-      border-radius: 8px;
-      padding: 4px 0;
-      min-width: 60px;
-    }
-    .button_nav-link.w-dropdown-link {
-      color: rgba(255,255,255,.65);
-      padding: 6px 14px;
-    }
-    .button_nav-link.w-dropdown-link:hover {
-      color: #fff;
-      background: rgba(255,255,255,.06);
+    @media (hover: hover) {
+      .nav_link:hover { color: white; }
+      .button_nav_wrap:hover .button_nav_element { color: white; border-color: white; }
+      .footer_social_icon:hover { color: #fff; }
     }
 
-    /* Protect Webflow header/footer from page CSS bleed */
-    header.header { position: sticky; top: 0; z-index: 200; }
-    header.header .nav { position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
-    footer.footer { border-top: none; margin-top: 0; }
+    /* Mobile: hide desktop nav, keep logo + lang */
+    @media (max-width: 767px) {
+      .nav { display: none; }
+      .nav_btns .nav-link { display: none; }
+    }
+
+    /* --- FOOTER --- */
+    .footer { background: rgba(6,14,26,.95); border-top: 1px solid rgba(255,255,255,.07);
+      padding: clamp(40px,6vw,80px) clamp(16px,4vw,46px); margin-top: 0; overflow: visible; }
+    .footer_inner { max-width: 1144px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+    .footer_logo_wrap { margin-bottom: 8px; }
+    .footer_logo_img { height: 44px; width: auto; opacity: .6; }
+    .footer_links_group { display: flex; flex-direction: column; gap: 12px; }
+    .footer_socials { display: flex; gap: 16px; }
+    .footer_social_link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.5); font-size: 13px; text-decoration: none; }
+    .footer_social_link:hover { color: #fff; }
+    .footer_legal { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+    .footer_legal_link { color: rgba(255,255,255,.4); font-size: 13px; text-decoration: none; }
+    .footer_pipe { color: rgba(255,255,255,.2); font-size: 13px; }
+    .footer_copyright { color: rgba(255,255,255,.35); font-size: 13px; }
+    .footer_meta { display: flex; flex-direction: column; gap: 4px; }
+    .footer_meta_row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; color: rgba(255,255,255,.35); font-size: 12px; }
+    .footer_meta_email { color: rgba(255,255,255,.45); text-decoration: none; }
+    .footer_badges { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+    .footer_badge { display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; }
+    .footer_badge_img { height: 36px; width: auto; opacity: .5; filter: grayscale(1) brightness(2); }
+    .footer_badge_caption { color: rgba(255,255,255,.3); font-size: 11px; max-width: 160px; text-align: center; }
+    .u-section { padding: 0; overflow: visible; }
+    .u-text-style-small { font-size: 13px; }
+    .is--muted { color: rgba(255,255,255,.55); }
 
     
   /* Sub-navigation bar (sticky, below main header) */
