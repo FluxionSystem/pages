@@ -38,12 +38,12 @@
       position: sticky; top: 0; z-index: 200;
       background: rgba(6,14,26,.85); backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.07);
-      padding: 0 clamp(16px,4vw,46px);
+      padding: 0 clamp(1rem, calc(1rem + (2 - 1) / (71.5 - 20) * (100vw - 20rem)), 2rem);
     }
-    .header_container { display: flex; align-items: center; gap: 16px; max-width: 1144px; margin: 0 auto; padding: 14px 0; }
+    .header_container { display: flex; align-items: center; gap: 16px; max-width: 71.5rem; margin: 0 auto; padding: 18px 0; width: 100%; }
     .flex-grow { flex: 1; }
     .nav_logo { display: inline-flex; text-decoration: none; }
-    .nav_logo img { height: 36px; width: auto; }
+    .nav_logo img { height: 44px; width: auto; }
     .nav { display: flex; align-items: center; position: static; background: none; backdrop-filter: none; border: none; padding: 0; }
     .nav_llst { display: flex; list-style: none; gap: 4px; margin: 0; padding: 0; }
     .nal_ll { list-style: none; }
@@ -717,6 +717,7 @@
         <li class="nal_ll"><a href="https://fluxionsystem.com/products" class="nav_link" data-nav="products">Products</a></li>
         <li class="nal_ll"><a href="https://fluxionsystem.com/#about" class="nav_link" data-nav="about">About</a></li>
         <li class="nal_ll"><a href="https://fluxionsystem.com/#contact" class="nav_link" data-nav="contact">Contact</a></li>
+        <li class="nal_ll"><a href="https://pages.fluxionsystem.com/denkware/" class="nav_link" data-nav="denkware">DenkWare</a></li>
       </ul>
     </nav>
     <div class="nav_btns">
@@ -1487,6 +1488,7 @@
       case "products":   nav.href = mainSiteBase + "/products"; break;
       case "about":      nav.href = mainSiteBase + "/#about"; break;
       case "contact":    nav.href = mainSiteBase + "/#contact"; break;
+      case "denkware":   nav.href = "https://pages.fluxionsystem.com" + localePrefix + "/denkware/"; break;
     }
   }
 })();
