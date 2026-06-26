@@ -338,11 +338,14 @@
     var localePrefix = LOCALES[currentLocale].prefix;
     var mainSiteBase = MAIN_SITE + localePrefix;
 
+    // For non-EN locales, homepage is at /xx/home not /xx/
+    var homeBase = (currentLocale === "en") ? mainSiteBase : mainSiteBase + "/home";
+
     switch (target) {
-      case "technology": nav.href = mainSiteBase + "/#technology"; break;
+      case "technology": nav.href = homeBase + "#technology"; break;
       case "products":   nav.href = mainSiteBase + "/products"; break;
-      case "about":      nav.href = mainSiteBase + "/#about"; break;
-      case "contact":    nav.href = mainSiteBase + "/#contact"; break;
+      case "about":      nav.href = homeBase + "#about"; break;
+      case "contact":    nav.href = homeBase + "#contact"; break;
       case "denkware":   nav.href = "https://pages.fluxionsystem.com" + localePrefix + "/denkware/"; break;
     }
   }
